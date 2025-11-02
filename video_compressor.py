@@ -225,7 +225,7 @@ class VideoCompressor:
         self.cancel_btn.pack(side='left')
 
         # Version number (same row as buttons, right aligned)
-        version_label = tk.Label(btn_container, text="v1.0",
+        version_label = tk.Label(btn_container, text="v1.0.1",
                                fg='#95a5a6',
                                font=('Arial', 8))
         version_label.pack(side='right', padx=(0, 10))
