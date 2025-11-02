@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-视频压缩工具 - 使用 FFmpeg 和 HEVC 编码
+Video Compression Tool - Using FFmpeg and HEVC Encoding
 """
 
 import tkinter as tk
@@ -16,7 +16,7 @@ import winreg
 class VideoCompressor:
     def __init__(self, root):
         self.root = root
-        self.root.title("视频压缩工具")
+        self.root.title("Video Compression Tool")
         self.root.geometry("700x800")
         self.root.resizable(False, False)
 
@@ -29,55 +29,55 @@ class VideoCompressor:
         self.check_ffmpeg()
 
     def get_downloads_folder(self):
-        """从注册表获取用户的下载文件夹路径"""
+        """Get the user's Downloads folder path from registry"""
         try:
-            # 打开注册表路径
+            # Open registry path
             key = winreg.OpenKey(
                 winreg.HKEY_CURRENT_USER,
                 r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders'
             )
-            # 读取 Downloads 文件夹路径
+            # Read Downloads folder path
             downloads_path, _ = winreg.QueryValueEx(key, '{374DE290-123F-4565-9164-39C4925E467B}')
             winreg.CloseKey(key)
             return downloads_path
         except Exception:
-            # 如果读取失败，返回默认路径
+            # If reading fails, return default path
             return os.path.join(os.path.expanduser('~'), 'Downloads')
 
     def check_ffmpeg(self):
-        """检查 FFmpeg 是否安装"""
+        """Check if FFmpeg is installed"""
         try:
             subprocess.run(['ffmpeg', '-version'],
                          capture_output=True,
                          check=True,
                          creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
         except (subprocess.CalledProcessError, FileNotFoundError):
-            messagebox.showerror("错误",
-                "未找到 FFmpeg！\n请先安装 FFmpeg 并添加到系统 PATH。")
+            messagebox.showerror("Error",
+                "FFmpeg not found!\nPlease install FFmpeg and add it to system PATH.")
             self.compress_btn['state'] = 'disabled'
 
     def setup_ui(self):
-        """设置界面"""
-        # 标题
+        """Setup user interface"""
+        # Title
         title_frame = tk.Frame(self.root, bg='#2c3e50', height=50)
         title_frame.pack(fill='x')
         title_label = tk.Label(title_frame,
-                              text="视频压缩工具",
-                              font=('Microsoft YaHei UI', 14, 'bold'),
+                              text="Video Compression Tool",
+                              font=('Arial', 14, 'bold'),
                               fg='white', bg='#2c3e50')
         title_label.pack(pady=12)
 
-        # 主容器
+        # Main container
         main_frame = tk.Frame(self.root, padx=20, pady=15)
         main_frame.pack(fill='both', expand=True)
 
-        # 文件选择区域
-        file_frame = tk.LabelFrame(main_frame, text="选择视频文件",
-                                   font=('Microsoft YaHei UI', 9), padx=10, pady=8)
+        # File selection area
+        file_frame = tk.LabelFrame(main_frame, text="Select Video File",
+                                   font=('Arial', 9), padx=10, pady=8)
         file_frame.pack(fill='x', pady=(0, 10))
 
         self.file_label = tk.Label(file_frame,
-                                   text="未选择文件",
+                                   text="No file selected",
                                    fg='gray',
                                    wraplength=600,
                                    justify='left')
@@ -87,61 +87,61 @@ class VideoCompressor:
         btn_frame.pack(fill='x')
 
         select_btn = tk.Button(btn_frame,
-                              text="选择文件",
+                              text="Select File",
                               command=self.select_file,
                               bg='#3498db', fg='white',
-                              font=('Microsoft YaHei UI', 9),
+                              font=('Arial', 9),
                               cursor='hand2',
                               padx=15, pady=5)
         select_btn.pack(side='left', padx=(0, 10))
 
-        self.info_label = tk.Label(btn_frame, text="", fg='#27ae60', font=('Microsoft YaHei UI', 9))
+        self.info_label = tk.Label(btn_frame, text="", fg='#27ae60', font=('Arial', 9))
         self.info_label.pack(side='left')
 
-        # 输出目录选择
-        output_frame = tk.LabelFrame(main_frame, text="输出目录",
-                                     font=('Microsoft YaHei UI', 9), padx=10, pady=8)
+        # Output directory selection
+        output_frame = tk.LabelFrame(main_frame, text="Output Directory",
+                                     font=('Arial', 9), padx=10, pady=8)
         output_frame.pack(fill='x', pady=(0, 10))
 
         self.output_label = tk.Label(output_frame,
-                                     text=f"默认保存到: {self.output_dir}",
+                                     text=f"Default save to: {self.output_dir}",
                                      fg='black',
                                      wraplength=600,
                                      justify='left',
-                                     font=('Microsoft YaHei UI', 9))
+                                     font=('Arial', 9))
         self.output_label.pack(anchor='w', pady=(0, 10))
 
         output_btn_frame = tk.Frame(output_frame)
         output_btn_frame.pack(fill='x')
 
         output_btn = tk.Button(output_btn_frame,
-                              text="选择输出目录",
+                              text="Select Output Directory",
                               command=self.select_output_dir,
                               bg='#3498db', fg='white',
-                              font=('Microsoft YaHei UI', 9),
+                              font=('Arial', 9),
                               cursor='hand2',
                               padx=15, pady=5)
         output_btn.pack(side='left', padx=(0, 10))
 
         reset_output_btn = tk.Button(output_btn_frame,
-                                     text="重置为默认",
+                                     text="Reset to Default",
                                      command=self.reset_output_dir,
-                                     font=('Microsoft YaHei UI', 9),
+                                     font=('Arial', 9),
                                      cursor='hand2',
                                      padx=15, pady=5)
         reset_output_btn.pack(side='left')
 
-        # 压缩质量选择
-        quality_frame = tk.LabelFrame(main_frame, text="压缩质量设置",
-                                     font=('Microsoft YaHei UI', 9), padx=10, pady=8)
+        # Compression quality selection
+        quality_frame = tk.LabelFrame(main_frame, text="Compression Quality Settings",
+                                     font=('Arial', 9), padx=10, pady=8)
         quality_frame.pack(fill='x', pady=(0, 10))
 
         self.quality_var = tk.StringVar(value="high")
 
         qualities = [
-            ("高质量 (CRF 28, 1080p, 96kbps) - 视觉无损，压缩率 90-95%", "high"),
-            ("中等质量 (CRF 32, 1080p, 64kbps) - 轻微损失，压缩率 95-97%", "medium"),
-            ("高度压缩 (CRF 36, 720p, 48kbps) - 明显损失，压缩率 97-99%", "small")
+            ("High Quality (CRF 28, 1080p, 96kbps) - Visually lossless, 90-95% compression", "high"),
+            ("Medium Quality (CRF 32, 1080p, 64kbps) - Slight loss, 95-97% compression", "medium"),
+            ("High Compression (CRF 36, 720p, 48kbps) - Noticeable loss, 97-99% compression", "small")
         ]
 
         for text, value in qualities:
@@ -149,94 +149,94 @@ class VideoCompressor:
                               text=text,
                               variable=self.quality_var,
                               value=value,
-                              font=('Microsoft YaHei UI', 9),
+                              font=('Arial', 9),
                               anchor='w',
                               justify='left')
             rb.pack(anchor='w', pady=3)
 
-        # 自定义设置
-        custom_frame = tk.LabelFrame(main_frame, text="自定义设置 (可选)",
-                                    font=('Microsoft YaHei UI', 9), padx=10, pady=8)
+        # Custom settings
+        custom_frame = tk.LabelFrame(main_frame, text="Custom Settings (Optional)",
+                                    font=('Arial', 9), padx=10, pady=8)
         custom_frame.pack(fill='x', pady=(0, 10))
 
-        # 说明文字
+        # Tip text
         tip_label = tk.Label(custom_frame,
-                           text="提示：以下设置会覆盖上方预设。数值越小=质量越高=文件越大",
+                           text="Tip: These settings will override the presets above. Lower values = Higher quality = Larger file size",
                            fg='#e67e22',
-                           font=('Microsoft YaHei UI', 8),
+                           font=('Arial', 8),
                            wraplength=600)
         tip_label.pack(anchor='w', pady=(0, 5))
 
         # CRF
         crf_frame = tk.Frame(custom_frame)
         crf_frame.pack(fill='x', pady=5)
-        crf_label = tk.Label(crf_frame, text="CRF 值 (18-36):", width=15, anchor='w', font=('Microsoft YaHei UI', 9))
+        crf_label = tk.Label(crf_frame, text="CRF Value (18-36):", width=18, anchor='w', font=('Arial', 9))
         crf_label.pack(side='left')
         self.crf_var = tk.StringVar(value="")
-        tk.Entry(crf_frame, textvariable=self.crf_var, width=10, font=('Microsoft YaHei UI', 9)).pack(side='left', padx=5)
-        crf_help = tk.Label(crf_frame, text="视频质量 (18=极高, 28=高, 36=低)", fg='gray', font=('Microsoft YaHei UI', 8))
+        tk.Entry(crf_frame, textvariable=self.crf_var, width=10, font=('Arial', 9)).pack(side='left', padx=5)
+        crf_help = tk.Label(crf_frame, text="Video quality (18=Very high, 28=High, 36=Low)", fg='gray', font=('Arial', 8))
         crf_help.pack(side='left')
 
-        # 宽度
+        # Width
         width_frame = tk.Frame(custom_frame)
         width_frame.pack(fill='x', pady=5)
-        width_label = tk.Label(width_frame, text="目标宽度:", width=15, anchor='w', font=('Microsoft YaHei UI', 9))
+        width_label = tk.Label(width_frame, text="Target Width:", width=18, anchor='w', font=('Arial', 9))
         width_label.pack(side='left')
         self.width_var = tk.StringVar(value="")
-        tk.Entry(width_frame, textvariable=self.width_var, width=10, font=('Microsoft YaHei UI', 9)).pack(side='left', padx=5)
-        width_help = tk.Label(width_frame, text="分辨率 (1920=1080p, 1280=720p, 留空=保持)", fg='gray', font=('Microsoft YaHei UI', 8))
+        tk.Entry(width_frame, textvariable=self.width_var, width=10, font=('Arial', 9)).pack(side='left', padx=5)
+        width_help = tk.Label(width_frame, text="Resolution (1920=1080p, 1280=720p, leave blank=keep)", fg='gray', font=('Arial', 8))
         width_help.pack(side='left')
 
-        # 音频比特率
+        # Audio bitrate
         audio_frame = tk.Frame(custom_frame)
         audio_frame.pack(fill='x', pady=5)
-        audio_label = tk.Label(audio_frame, text="音频比特率:", width=15, anchor='w', font=('Microsoft YaHei UI', 9))
+        audio_label = tk.Label(audio_frame, text="Audio Bitrate:", width=18, anchor='w', font=('Arial', 9))
         audio_label.pack(side='left')
         self.audio_var = tk.StringVar(value="")
-        tk.Entry(audio_frame, textvariable=self.audio_var, width=10, font=('Microsoft YaHei UI', 9)).pack(side='left', padx=5)
-        audio_help = tk.Label(audio_frame, text="音质 (128k=高, 96k=中, 64k=低)", fg='gray', font=('Microsoft YaHei UI', 8))
+        tk.Entry(audio_frame, textvariable=self.audio_var, width=10, font=('Arial', 9)).pack(side='left', padx=5)
+        audio_help = tk.Label(audio_frame, text="Audio quality (128k=High, 96k=Medium, 64k=Low)", fg='gray', font=('Arial', 8))
         audio_help.pack(side='left')
 
-        # 状态显示
-        self.status_label = tk.Label(main_frame, text="", fg='#7f8c8d', font=('Microsoft YaHei UI', 9))
+        # Status display
+        self.status_label = tk.Label(main_frame, text="", fg='#7f8c8d', font=('Arial', 9))
         self.status_label.pack(anchor='w', pady=(5, 10))
 
-        # 按钮区域
+        # Button area
         btn_container = tk.Frame(main_frame)
         btn_container.pack(fill='x', pady=(0, 10))
 
         self.compress_btn = tk.Button(btn_container,
-                                     text="开始压缩",
+                                     text="Start Compression",
                                      command=self.start_compression,
                                      bg='#27ae60', fg='white',
-                                     font=('Microsoft YaHei UI', 11, 'bold'),
+                                     font=('Arial', 11, 'bold'),
                                      cursor='hand2',
                                      padx=40, pady=12)
         self.compress_btn.pack(side='left', padx=(0, 10))
 
         self.cancel_btn = tk.Button(btn_container,
-                                   text="取消",
+                                   text="Cancel",
                                    command=self.cancel_compression,
                                    bg='#e74c3c', fg='white',
-                                   font=('Microsoft YaHei UI', 11),
+                                   font=('Arial', 11),
                                    cursor='hand2',
                                    padx=40, pady=12,
                                    state='disabled')
         self.cancel_btn.pack(side='left')
 
-        # 版本号（和按钮同一行，右对齐）
-        version_label = tk.Label(btn_container, text="v1.0",
+        # Version number (same row as buttons, right aligned)
+        version_label = tk.Label(btn_container, text="v1.0.1",
                                fg='#95a5a6',
-                               font=('Microsoft YaHei UI', 8))
+                               font=('Arial', 8))
         version_label.pack(side='right', padx=(0, 10))
 
     def select_file(self):
-        """选择视频文件"""
+        """Select video file"""
         filename = filedialog.askopenfilename(
-            title="选择视频文件",
+            title="Select Video File",
             filetypes=[
-                ("视频文件", "*.mp4 *.mkv *.avi *.mov *.flv *.wmv *.webm"),
-                ("所有文件", "*.*")
+                ("Video Files", "*.mp4 *.mkv *.avi *.mov *.flv *.wmv *.webm"),
+                ("All Files", "*.*")
             ]
         )
 
@@ -244,32 +244,32 @@ class VideoCompressor:
             self.input_file = filename
             self.file_label.config(text=filename, fg='black')
 
-            # 获取文件大小
+            # Get file size
             size_mb = os.path.getsize(filename) / (1024 * 1024)
-            self.info_label.config(text=f"文件大小: {size_mb:.1f} MB")
+            self.info_label.config(text=f"File size: {size_mb:.1f} MB")
 
     def select_output_dir(self):
-        """选择输出目录"""
-        dirname = filedialog.askdirectory(title="选择输出目录")
+        """Select output directory"""
+        dirname = filedialog.askdirectory(title="Select Output Directory")
 
         if dirname:
             self.output_dir = dirname
             self.output_label.config(text=dirname, fg='black')
 
     def reset_output_dir(self):
-        """重置输出目录为默认"""
+        """Reset output directory to default"""
         self.output_dir = self.get_downloads_folder()
-        self.output_label.config(text=f"默认保存到: {self.output_dir}", fg='black')
+        self.output_label.config(text=f"Default save to: {self.output_dir}", fg='black')
 
     def get_compression_params(self):
-        """获取压缩参数"""
-        # 自定义优先
+        """Get compression parameters"""
+        # Custom settings take priority
         crf = self.crf_var.get().strip()
         width = self.width_var.get().strip()
         audio = self.audio_var.get().strip()
 
         if crf or width or audio:
-            # 使用自定义设置
+            # Use custom settings
             if not crf:
                 crf = "28"
             if not audio:
@@ -278,7 +278,7 @@ class VideoCompressor:
             scale = f"-vf scale={width}:-1" if width else ""
             suffix = "custom"
         else:
-            # 使用预设
+            # Use preset
             quality = self.quality_var.get()
 
             if quality == "high":
@@ -300,12 +300,12 @@ class VideoCompressor:
         return crf, scale, audio, suffix
 
     def start_compression(self):
-        """开始压缩"""
+        """Start compression"""
         if not self.input_file:
-            messagebox.showwarning("警告", "请先选择视频文件！")
+            messagebox.showwarning("Warning", "Please select a video file first!")
             return
 
-        # 生成输出文件名
+        # Generate output filename
         dir_name = self.output_dir
 
         base_name = os.path.splitext(os.path.basename(self.input_file))[0]
@@ -314,37 +314,37 @@ class VideoCompressor:
 
         self.output_file = os.path.join(dir_name, f"{base_name}_compressed_{suffix}.mp4")
 
-        # 确认开始
+        # Confirm start
         result = messagebox.askyesno(
-            "确认压缩",
-            f"输入文件: {self.input_file}\n\n"
-            f"输出文件: {self.output_file}\n\n"
+            "Confirm Compression",
+            f"Input file: {self.input_file}\n\n"
+            f"Output file: {self.output_file}\n\n"
             f"CRF: {crf}\n"
-            f"音频: {audio}\n\n"
-            f"开始压缩？"
+            f"Audio: {audio}\n\n"
+            f"Start compression?"
         )
 
         if not result:
             return
 
-        # 禁用按钮，显示加载动画
-        self.compress_btn.config(text="压缩中...", state='disabled')
+        # Disable button, show loading animation
+        self.compress_btn.config(text="Compressing...", state='disabled')
         self.cancel_btn['state'] = 'normal'
         self.is_compressing = True
 
-        # 更新状态
-        self.status_label.config(text="正在压缩，请稍候...", fg='#3498db')
+        # Update status
+        self.status_label.config(text="Compressing, please wait...", fg='#3498db')
 
-        # 在新线程中执行压缩
+        # Execute compression in new thread
         thread = threading.Thread(target=self.compress_video,
                                  args=(crf, scale, audio))
         thread.daemon = True
         thread.start()
 
     def compress_video(self, crf, scale, audio):
-        """执行视频压缩"""
+        """Execute video compression"""
         try:
-            # 构建 FFmpeg 命令
+            # Build FFmpeg command
             cmd = [
                 'ffmpeg',
                 '-i', self.input_file,
@@ -357,13 +357,14 @@ class VideoCompressor:
                 cmd.extend(scale.split())
 
             cmd.extend([
+                '-tag:v', 'hvc1',
                 '-c:a', 'aac',
                 '-b:a', audio,
                 '-y',
                 self.output_file
             ])
 
-            # 执行压缩
+            # Execute compression
             process = subprocess.Popen(
                 cmd,
                 stdout=subprocess.PIPE,
@@ -375,11 +376,11 @@ class VideoCompressor:
             stdout, stderr = process.communicate()
 
             if not self.is_compressing:
-                # 用户取消了
+                # User cancelled
                 return
 
             if process.returncode == 0:
-                # 压缩成功
+                # Compression successful
                 original_size = os.path.getsize(self.input_file) / (1024 * 1024)
                 compressed_size = os.path.getsize(self.output_file) / (1024 * 1024)
                 ratio = (1 - compressed_size / original_size) * 100
@@ -395,44 +396,44 @@ class VideoCompressor:
             self.root.after(0, lambda: self.compression_failed(str(e)))
 
     def compression_complete(self, original_size, compressed_size, ratio):
-        """压缩完成"""
-        self.status_label.config(text="压缩完成！", fg='#27ae60')
+        """Compression complete"""
+        self.status_label.config(text="Compression complete!", fg='#27ae60')
 
-        self.compress_btn.config(text="开始压缩", state='normal')
+        self.compress_btn.config(text="Start Compression", state='normal')
         self.cancel_btn['state'] = 'disabled'
         self.is_compressing = False
 
         messagebox.showinfo(
-            "压缩完成",
-            f"压缩成功！\n\n"
-            f"原始大小: {original_size:.1f} MB\n"
-            f"压缩后: {compressed_size:.1f} MB\n"
-            f"压缩率: {ratio:.1f}%\n\n"
-            f"输出文件:\n{self.output_file}"
+            "Compression Complete",
+            f"Compression successful!\n\n"
+            f"Original size: {original_size:.1f} MB\n"
+            f"Compressed: {compressed_size:.1f} MB\n"
+            f"Compression ratio: {ratio:.1f}%\n\n"
+            f"Output file:\n{self.output_file}"
         )
 
     def compression_failed(self, error):
-        """压缩失败"""
-        self.status_label.config(text="压缩失败", fg='#e74c3c')
+        """Compression failed"""
+        self.status_label.config(text="Compression failed", fg='#e74c3c')
 
-        self.compress_btn.config(text="开始压缩", state='normal')
+        self.compress_btn.config(text="Start Compression", state='normal')
         self.cancel_btn['state'] = 'disabled'
         self.is_compressing = False
 
-        messagebox.showerror("压缩失败", f"压缩过程中出现错误:\n\n{error}")
+        messagebox.showerror("Compression Failed", f"An error occurred during compression:\n\n{error}")
 
     def cancel_compression(self):
-        """取消压缩"""
+        """Cancel compression"""
         if hasattr(self, 'current_process'):
             self.current_process.terminate()
             self.is_compressing = False
 
-            self.status_label.config(text="已取消", fg='#e74c3c')
+            self.status_label.config(text="Cancelled", fg='#e74c3c')
 
-            self.compress_btn.config(text="开始压缩", state='normal')
+            self.compress_btn.config(text="Start Compression", state='normal')
             self.cancel_btn['state'] = 'disabled'
 
-            # 删除未完成的输出文件
+            # Delete incomplete output file
             if self.output_file and os.path.exists(self.output_file):
                 try:
                     os.remove(self.output_file)
