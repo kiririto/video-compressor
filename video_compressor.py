@@ -357,6 +357,7 @@ class VideoCompressor:
                 cmd.extend(scale.split())
 
             cmd.extend([
+                '-tag:v', 'hvc1',
                 '-c:a', 'aac',
                 '-b:a', audio,
                 '-y',

@@ -32,3 +32,4 @@ desktop.ini
 
 # Logs
 *.log
+.claude/
