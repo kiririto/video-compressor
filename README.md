@@ -49,7 +49,7 @@ A simple and efficient GUI application for video compression using FFmpeg and HE
      ```bash
      git clone https://github.com/kiririto/video-compressor.git
      cd video-compressor
-     python video_compressor_Ver.1.0.py
+     python video_compressor.py
      ```
 
 ### Usage
@@ -112,7 +112,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
      ```bash
      git clone https://github.com/kiririto/video-compressor.git
      cd video-compressor
-     python video_compressor_Ver.1.0.py
+     python video_compressor.py
      ```
 
 ### 使用方法
@@ -175,7 +175,7 @@ FFmpeg と HEVC (H.265) エンコーディングを使用したシンプルで�
      ```bash
      git clone https://github.com/kiririto/video-compressor.git
      cd video-compressor
-     python video_compressor_Ver.1.0.py
+     python video_compressor.py
      ```
 
 ### 使い方
